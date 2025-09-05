@@ -61,3 +61,26 @@ Game::Game(const string &title, int width, int height) {
     // TODO: classe State
     state = nullptr;
 }
+
+Game::~Game() {
+    if (state) {
+        delete state;
+    }
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    Mix_CloseAudio();
+    Mix_Quit();
+    IMG_Quit();
+    SDL_Quit();
+}
+
+State& Game::GetState() {
+    return *state;;
+}
+
+SDL_Renderer* Game::GetRenderer() {
+    return renderer;
+}
+
+void Game::Run() {
+}
