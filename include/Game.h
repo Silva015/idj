@@ -18,7 +18,7 @@ class Game {
     static Game& GetInstance();
 
     private:
-    Game(string title, int width, int height);
+    Game(const string &title, int width, int height);
     static Game* instance;
     SDL_Window* window;
     SDL_Renderer* renderer;

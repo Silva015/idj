@@ -7,12 +7,13 @@ Game* Game::instance = nullptr;
 
 Game& Game::GetInstance() {
     if (instance == nullptr) {
-        instance = new Game("Meu Jogo", 1024, 600);
+        instance = new Game("JOGO DO ZUMBI", 1024, 600);
     }
+
     return *instance;
 }
 
-Game::Game(string title, int width, int height) {
+Game::Game(const string &title, int width, int height) {
     if (instance != nullptr) {
         fprintf(stderr,"Erro: instância de Game já existe %s\n", SDL_GetError());
         exit(1);
@@ -34,4 +35,29 @@ Game::Game(string title, int width, int height) {
         fprintf(stderr,"Erro: falha ao inicializar biblioteca de sons MIX %s\n", SDL_GetError());
         exit(1);
     }
+
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0) {
+        fprintf(stderr,"Erro: falha ao inicializar áudio %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    if (Mix_AllocateChannels(32) != 0) {
+        fprintf(stderr,"Erro: falha ao alocar canais de áudio %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+    if (window == nullptr) {
+        fprintf(stderr,"Erro: falha ao criar janela %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr) {
+        fprintf(stderr,"Erro: falha ao criar renderizador %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    // TODO: classe State
+    state = nullptr;
 }
