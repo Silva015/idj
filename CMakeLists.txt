@@ -1,27 +1,46 @@
-cmake_minimum_required(VERSION 3.20)
-project(MeuJogo)
+# Versão mínima do CMake e nome do projeto
+cmake_minimum_required(VERSION 3.10)
+project(MeuJogo CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+# Define o padrão do C++ para C++11, como exigido pela disciplina
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Encontra as bibliotecas SDL2
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_mixer REQUIRED)
+# --- Configuração do Projeto ---
 
-# Adiciona os diretórios de inclusão (headers)
-include_directories(include)
-include_directories(${SDL2_INCLUDE_DIRS})
-include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
-include_directories(${SDL2_MIXER_INCLUDE_DIRS})
+# Encontra automaticamente todos os ficheiros .cpp dentro da pasta 'src'
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-# Adiciona o executável e os arquivos-fonte
-add_executable(MeuJogo src/SDL.cpp
-        include/Game.h
-        include/SDL_include.h
-        include/State.h
-        src/Game.cpp
-        src/main.cpp
-        src/State.cpp)
+# Cria o executável final com o nome "MeuJogo" a partir dos ficheiros fonte encontrados
+add_executable(MeuJogo ${SOURCES})
 
-# Linka as bibliotecas SDL2 com o seu executável
-target_link_libraries(MeuJogo ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+# --- Inclusão e Linkagem (MÉTODO TOTALMENTE MANUAL PARA MAC) ---
+# Esta abordagem ignora o find_package, que está a falhar, e usa os caminhos exatos do Homebrew.
+
+# Adiciona os diretórios de include necessários
+target_include_directories(MeuJogo PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/include"  # Para os seus cabeçalhos (.h)
+        "/opt/homebrew/include"               # Para os cabeçalhos da SDL
+)
+
+# Adiciona o diretório onde o linker deve procurar as bibliotecas
+target_link_directories(MeuJogo PUBLIC
+        "/opt/homebrew/lib"                   # Para as bibliotecas da SDL (.dylib)
+)
+
+# Linka as bibliotecas da SDL pelo nome
+target_link_libraries(MeuJogo PUBLIC
+        SDL2
+        SDL2_image
+        SDL2_mixer
+        SDL2_ttf
+)
+
+# --- Passo Pós-Compilação: Copiar Recursos ---
+# Copia a pasta "Recursos" para o mesmo diretório do executável
+add_custom_command(TARGET MeuJogo POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Recursos
+        $<TARGET_FILE_DIR:MeuJogo>/Recursos
+)
+
