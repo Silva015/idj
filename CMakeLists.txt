@@ -12,7 +12,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # Cria o executável final com o nome "MeuJogo" a partir dos ficheiros fonte encontrados
-add_executable(MeuJogo ${SOURCES})
+add_executable(MeuJogo ${SOURCES}
+        include/State.h
+        src/State.cpp
+        include/Sprite.h
+        include/Music.h)
 
 # --- Inclusão e Linkagem (MÉTODO TOTALMENTE MANUAL PARA MAC) ---
 # Esta abordagem ignora o find_package, que está a falhar, e usa os caminhos exatos do Homebrew.

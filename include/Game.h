@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class State {};
+class State;
 
 class Game {
     public:
