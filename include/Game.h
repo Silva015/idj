@@ -12,9 +12,9 @@ class State;
 class Game {
     public:
     ~Game();
-    void Run();
-    SDL_Renderer* GetRenderer();
-    State& GetState();
+    void Run() const;
+    SDL_Renderer* GetRenderer() const;
+    State& GetState() const;
     static Game& GetInstance();
 
     private:

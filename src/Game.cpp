@@ -2,12 +2,13 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
+#include "State.h"
 
 Game* Game::instance = nullptr;
 
 Game& Game::GetInstance() {
     if (instance == nullptr) {
-        instance = new Game("JOGO DO ZUMBI", 1024, 600);
+        instance = new Game("JOGO DO ZUMBI", 1200, 900);
     }
 
     return *instance;
@@ -58,14 +59,11 @@ Game::Game(const string &title, int width, int height) {
         exit(1);
     }
 
-    // TODO: classe State
-    state = nullptr;
+    state = new State();
 }
 
 Game::~Game() {
-    if (state) {
-        delete state;
-    }
+    delete state;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     Mix_CloseAudio();
@@ -74,13 +72,19 @@ Game::~Game() {
     SDL_Quit();
 }
 
-State& Game::GetState() {
-    return *state;;
+State& Game::GetState() const {
+    return *state;
 }
 
-SDL_Renderer* Game::GetRenderer() {
+SDL_Renderer* Game::GetRenderer() const {
     return renderer;
 }
 
-void Game::Run() {
+void Game::Run() const {
+    while (!state->QuitRequested()) {
+        state->Update(0);
+        state->Render();
+        SDL_RenderPresent(renderer);
+        SDL_Delay(33);
+    }
 }
