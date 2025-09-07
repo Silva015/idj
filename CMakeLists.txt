@@ -16,7 +16,8 @@ add_executable(MeuJogo ${SOURCES}
         include/State.h
         src/State.cpp
         include/Sprite.h
-        include/Music.h)
+        include/Music.h
+        src/Sprite.cpp)
 
 # --- Inclusão e Linkagem (MÉTODO TOTALMENTE MANUAL PARA MAC) ---
 # Esta abordagem ignora o find_package, que está a falhar, e usa os caminhos exatos do Homebrew.

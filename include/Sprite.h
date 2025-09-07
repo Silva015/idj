@@ -8,19 +8,19 @@ using namespace std;
 class Sprite {
 public:
     Sprite();
-    explicit Sprite(string file);
+    explicit Sprite(const string& file);
     ~Sprite();
-    void Open(string file);
+    void Open(const string& file);
     void SetClip(int x, int y, int w, int h);
-    void Render(int x, int y);
-    int GetWidth();
-    int GetHeight();
-    bool IsOpen();
+    void Render(int x, int y) const;
+    int GetWidth() const;
+    int GetHeight() const;
+    bool IsOpen() const;
 private:
     SDL_Texture *texture;
     int width;
     int height;
-    SDL_Rect clipRect;
+    SDL_Rect clipRect{};
 };
 
 #endif
