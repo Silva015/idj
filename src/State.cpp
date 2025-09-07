@@ -20,7 +20,7 @@ void State::Update(float dt) {
         quitRequested = true;
     }
 }
-void State::Render() {
+void State::Render() const {
     bg.Render(0, 0);
 }
 

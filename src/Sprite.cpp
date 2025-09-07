@@ -41,6 +41,7 @@ void Sprite::Open(const string& file) {
     }
 
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    clipRect = {0, 0, width, height};
 }
 
 void Sprite::SetClip(const int x, const int y, const int w, const int h) {

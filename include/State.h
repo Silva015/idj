@@ -9,7 +9,7 @@ public:
     bool QuitRequested() const;
     void LoadAssets();
     void Update(float dt);
-    void Render();
+    void Render() const;
 private:
     Sprite bg;
     Music music;

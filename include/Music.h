@@ -8,12 +8,13 @@ using namespace std;
 class Music {
 public:
     Music();
-    explicit Music(string file);
+    explicit Music(const string& file);
     ~Music();
-    void Play(int times = -1);
-    void Stop(int msToStop = 1500);
-    void Open(string file);
-    bool IsOpen();
+    void Play(int times = -1) const;
+
+    static void Stop(int msToStop = 1500);
+    void Open(const string& file);
+    bool IsOpen() const;
 private:
     Mix_Music *music;
 };

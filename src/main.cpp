@@ -1,6 +1,7 @@
-#include <iostream>
+#include "Game.h"
 
-int main() {
-    std::cout << "Projeto compilando com sucesso!" << std::endl;
+int main(int argc, char** argv) {
+    Game const &game = Game::GetInstance();
+    game.Run();
     return 0;
 }

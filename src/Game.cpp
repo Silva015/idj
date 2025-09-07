@@ -8,7 +8,7 @@ Game* Game::instance = nullptr;
 
 Game& Game::GetInstance() {
     if (instance == nullptr) {
-        instance = new Game("JOGO DO ZUMBI", 1200, 900);
+        instance = new Game("ARTHUR SILVA CARNEIRO - 202006321", 1200, 900);
     }
 
     return *instance;
@@ -42,7 +42,7 @@ Game::Game(const string &title, int width, int height) {
         exit(1);
     }
 
-    if (Mix_AllocateChannels(32) != 0) {
+    if (Mix_AllocateChannels(32) != 32) {
         fprintf(stderr,"Erro: falha ao alocar canais de áudio %s\n", SDL_GetError());
         exit(1);
     }
