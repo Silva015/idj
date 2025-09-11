@@ -21,7 +21,8 @@ add_executable(MeuJogo ${SOURCES}
         src/Music.cpp
         include/Vec2.h
         src/Vec2.cpp
-        include/Rect.h)
+        include/Rect.h
+        src/Rect.cpp)
 
 # --- Inclusão e Linkagem (MÉTODO TOTALMENTE MANUAL PARA MAC) ---
 # Esta abordagem ignora o find_package, que está a falhar, e usa os caminhos exatos do Homebrew.
