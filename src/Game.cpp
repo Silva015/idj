@@ -82,7 +82,7 @@ SDL_Renderer* Game::GetRenderer() const {
 
 void Game::Run() const {
     while (!state->QuitRequested()) {
-        state->Update(0);
+        state->Update(0.033f);
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
