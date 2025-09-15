@@ -1,13 +1,17 @@
 #define INCLUDE_SDL
 #include "SDL_include.h"
+#include "GameObject.h"
+#include "SpriteRenderer.h"
 #include "State.h"
-#include "Sprite.h"
 #include "Music.h"
 #include <algorithm>
 
 
 void State::LoadAssets() {
-    bg.Open("../Recursos/img/Background.png");
+    auto *go = new GameObject();
+    auto *sr = new SpriteRenderer(*go, "../Recursos/img/Background.png", 1, 1);
+    go->AddComponent(sr);
+    AddObject(go);
     music.Open("../Recursos/audio/BGM.wav");
     music.Play();
 }
@@ -22,12 +26,12 @@ State::~State() {
 }
 
 void State::Update(float dt) {
-    for (auto &go : objectArray) {
+    for (auto &go: objectArray) {
         go->Update(dt);
     }
 
     objectArray.erase(
-        std::remove_if(objectArray.begin(), objectArray.end(), [](const std::unique_ptr<GameObject>& go) {
+        std::remove_if(objectArray.begin(), objectArray.end(), [](const std::unique_ptr<GameObject> &go) {
             return go->IsDead();
         }),
         objectArray.end()
@@ -39,14 +43,12 @@ void State::Update(float dt) {
 }
 
 void State::Render() const {
-    for (auto& go : objectArray) {
+    for (auto &go: objectArray) {
         go->Render();
     }
-
-    bg.Render(0, 0);
 }
 
-void State::AddObject(GameObject* go) {
+void State::AddObject(GameObject *go) {
     objectArray.emplace_back(go);
 }
 
