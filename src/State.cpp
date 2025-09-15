@@ -2,6 +2,7 @@
 #include "SDL_include.h"
 #include "GameObject.h"
 #include "SpriteRenderer.h"
+#include "Zombie.h"
 #include "State.h"
 #include "Music.h"
 #include <algorithm>
@@ -12,6 +13,14 @@ void State::LoadAssets() {
     auto *sr = new SpriteRenderer(*go, "../Recursos/img/Background.png", 1, 1);
     go->AddComponent(sr);
     AddObject(go);
+
+    go = new GameObject();
+    go->box.x = 600;
+    go->box.y = 450;
+    auto *z = new Zombie(*go);
+    go->AddComponent(z);
+    AddObject(go);
+
     music.Open("../Recursos/audio/BGM.wav");
     music.Play();
 }
