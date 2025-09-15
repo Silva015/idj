@@ -8,18 +8,15 @@
 
 using namespace std;
 
-Sprite::Sprite() {
-    texture = nullptr;
-    width = 0;
-    height = 0;
-    clipRect = {0, 0, 0, 0};
-}
+Sprite::Sprite() : texture(nullptr), width(0), height(0), clipRect{0, 0, 0, 0}, frameCountW(1), frameCountH(1) {}
 
-Sprite::Sprite(const string& file) {
-    texture = nullptr;
-    width = 0;
-    height = 0;
-    clipRect = {0, 0, 0, 0};
+Sprite::Sprite(const string& file, const int frameCountW, const int frameCountH)
+    : texture(nullptr),
+      width(0),
+      height(0),
+      clipRect{0, 0, 0, 0},
+      frameCountW(frameCountW),
+      frameCountH(frameCountH) {
     Open(file);
 }
 
@@ -51,17 +48,32 @@ void Sprite::SetClip(const int x, const int y, const int w, const int h) {
     clipRect.h = h;
 }
 
-void Sprite::Render(const int x, const int y) const {
-    SDL_Rect dstrect = {x, y, clipRect.w, clipRect.h};
-    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
-}
-
 int Sprite::GetWidth() const {
-    return width;
+    const int frameW = width / frameCountW;
+    return frameW;
 }
 
 int Sprite::GetHeight() const {
-    return height;
+    const int frameY = height / frameCountH;
+    return frameY;
+}
+
+void Sprite::SetFrameCount(const int newFrameCountW, const int newFrameCountH) {
+    this->frameCountW = newFrameCountW;
+    this->frameCountH = newFrameCountH;
+}
+
+void Sprite::SetFrame(const int frame) {
+    const int frameW = GetWidth();
+    const int frameH = GetHeight();
+    const int fx = (frame % frameCountW) * frameW;
+    const int fy = (frame / frameCountW) * frameH;
+    SetClip(fx, fy, frameW, frameH);
+}
+
+void Sprite::Render(const int x, const int y, const int w, const int h) const {
+    SDL_Rect dstrect = {x, y, w, h};
+    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
 }
 
 bool Sprite::IsOpen() const {
