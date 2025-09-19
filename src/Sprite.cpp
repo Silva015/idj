@@ -8,9 +8,10 @@
 
 using namespace std;
 
-Sprite::Sprite() : texture(nullptr), width(0), height(0), clipRect{0, 0, 0, 0}, frameCountW(1), frameCountH(1) {}
+Sprite::Sprite() : texture(nullptr), width(0), height(0), clipRect{0, 0, 0, 0}, frameCountW(1), frameCountH(1) {
+}
 
-Sprite::Sprite(const string& file, const int frameCountW, const int frameCountH)
+Sprite::Sprite(const string &file, const int frameCountW, const int frameCountH)
     : texture(nullptr),
       width(0),
       height(0),
@@ -26,7 +27,7 @@ Sprite::~Sprite() {
     }
 }
 
-void Sprite::Open(const string& file) {
+void Sprite::Open(const string &file) {
     if (texture != nullptr) {
         SDL_DestroyTexture(texture);
     }

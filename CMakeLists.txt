@@ -32,7 +32,9 @@ add_executable(MeuJogo ${SOURCES}
         include/Zombie.h
         src/Zombie.cpp
         include/Animator.h
-        src/Animator.cpp)
+        src/Animator.cpp
+        include/TileSet.h
+        src/TileSet.cpp)
 
 # --- Inclusão e Linkagem (MÉTODO TOTALMENTE MANUAL PARA MAC) ---
 # Esta abordagem ignora o find_package, que está a falhar, e usa os caminhos exatos do Homebrew.
